@@ -75,7 +75,7 @@ import gui.TransitionEditorWindow;
 public class DrawArea extends JPanel implements MouseListener,
     MouseMotionListener, ActionListener, Printable {
 
-  private static final boolean PRINT_EVENTS_LOG = true;
+  private static final boolean PRINT_EVENTS_LOG = false;
 
   private static final ResourceBundle locale =
       ResourceBundle.getBundle("locale.Editors", new UTF8Control());
@@ -105,7 +105,7 @@ public class DrawArea extends JPanel implements MouseListener,
   // for multiple object select
   /** True iff several objects are selected ? */
   private boolean multipleSelect = false;
-  /** True iff a single object is selected ? */
+  /** True iff multiple object are selected ? */
   private boolean objsSelected = false;
   private int mXTemp = 0;
   private int mYTemp = 0;
@@ -358,7 +358,7 @@ public class DrawArea extends JPanel implements MouseListener,
    * @param oldObj
    * @param type
    */
-  private void setUndoPoint(GeneralObj oldObj, GeneralObjType type) {
+  private void setUndoPoint(GeneralObj oldObj) {
     tempList = null;
     tempList = (LinkedList<GeneralObj>) objList.clone();
 
@@ -373,6 +373,7 @@ public class DrawArea extends JPanel implements MouseListener,
       tempOld = oldObj;
       tempClone = clonedObj;
 
+      GeneralObjType type = oldObj.getType();
       // if a state, create clone of children transitions
       if (type == GeneralObjType.STATE) {
         fizzim_gui.updateGlobal(setUndoPoint());
@@ -546,10 +547,10 @@ public class DrawArea extends JPanel implements MouseListener,
           if (!doubleClick) {
             // if right click, create popup menu
             if (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20) {
-              setUndoPoint(s, s.getType());
+              setUndoPoint(s);
               createPopup(s, e);
             } else {
-              setUndoPoint(s, s.getType());
+              setUndoPoint(s);
             }
             break;
           } else {
@@ -596,10 +597,10 @@ public class DrawArea extends JPanel implements MouseListener,
             bestMatch = s;
 
             if (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20) {
-              setUndoPoint(s, GeneralObjType.TEXT);
+              setUndoPoint(s);
               createPopup(s, e);
             } else {
-              setUndoPoint(s, GeneralObjType.TEXT);
+              setUndoPoint(s);
             }
             break;
           }
@@ -614,13 +615,12 @@ public class DrawArea extends JPanel implements MouseListener,
               && s.setSelectStatus(e.getX(), e.getY())
               && s.getPage() == currPage) {
             bestMatch = s;
-            GeneralObjType type = s.getType();
 
             if (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20) {
-              setUndoPoint(s, type);
+              setUndoPoint(s);
               createPopup(s, e);
             } else {
-              setUndoPoint(s, type);
+              setUndoPoint(s);
             }
             break;
           }
@@ -636,10 +636,10 @@ public class DrawArea extends JPanel implements MouseListener,
             bestMatch = s;
 
             if (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20) {
-              setUndoPoint(s, GeneralObjType.STATE);
+              setUndoPoint(s);
               createPopup(s, e);
             } else {
-              setUndoPoint(s, GeneralObjType.STATE);
+              setUndoPoint(s);
             }
             break;
           }
@@ -647,10 +647,11 @@ public class DrawArea extends JPanel implements MouseListener,
       }
 
       // if nothing is clicked on, and right click
+      // TODO : Is the meaning of 20, MouseEvent.NOBUTTON ?
       if (bestMatch == null
           && (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20)) {
         createPopup(e);
-        setUndoPoint(null, null);
+        setUndoPoint(null);
       }
 
       // now do multiple select if still nothing found
@@ -1329,7 +1330,7 @@ public class DrawArea extends JPanel implements MouseListener,
    */
   public void delete() {
 
-    setUndoPoint(null, null);
+    setUndoPoint(null);
 
     /** Transitions to delete */
     Set<TransitionObj> transitions_to_delete = new LinkedHashSet<>();
