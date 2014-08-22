@@ -540,8 +540,8 @@ public class DrawArea extends JPanel implements MouseListener,
       // if object already selected
       for (GeneralObj s : (Collection<GeneralObj>) objList.clone()) {
         if (s.getSelectStatus() != SelectOptions.NONE
-            && s.setSelectStatus(e.getX(), e.getY())
-            && s.getPage() == currPage) {
+            && s.getPage() == currPage
+            && s.setSelectStatus(e.getX(), e.getY())) {
           bestMatch = s;
 
           if (!doubleClick) {
@@ -592,8 +592,8 @@ public class DrawArea extends JPanel implements MouseListener,
       if (bestMatch == null) {
         for (GeneralObj s : objList) {
           if (s.getType() == GeneralObjType.TEXT
-              && s.setSelectStatus(e.getX(), e.getY())
-              && s.getPage() == currPage) {
+              && s.getPage() == currPage
+              && s.setSelectStatus(e.getX(), e.getY())) {
             bestMatch = s;
 
             if (e.getButton() == MouseEvent.BUTTON3 || e.getModifiers() == 20) {

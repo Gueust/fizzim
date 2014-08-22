@@ -170,6 +170,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
 
   }
 
+  @Override
   public void initTrans(StateObj start, StateObj end) {
     if (startState != start || endState != end) {
       startState = start;
@@ -181,6 +182,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
       drawArea.pageConnUpdate(startState, endState);
   }
 
+  @Override
   @SuppressWarnings("unchecked")
   public Object clone() throws CloneNotSupportedException {
     StateTransitionObj copy = (StateTransitionObj) super.clone();
@@ -614,6 +616,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
     }
   }
 
+  @Override
   public void unselect() {
     selectStatus = SelectOptions.NONE;
   }
@@ -810,12 +813,9 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
     return GeneralObjType.TRANSITION;
   }
 
+  @Override
   public boolean isModified() {
-    if (modified)
-      return true;
-    else
-      return false;
-
+    return modified;
   }
 
   // sets modified back to false
@@ -828,6 +828,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
     modified = true;
   }
 
+  @Override
   public void updateObj() {
     int oldS = sPage;
     int oldE = ePage;
@@ -872,6 +873,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
 
   }
 
+  @Override
   public void notifyChange(GeneralObj old, GeneralObj clone) {
     if (old.equals(startState)) {
       startState = (StateObj) clone;
@@ -882,6 +884,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
 
   }
 
+  @Override
   public void setPage(int i) {
     if (selectStatus == SelectOptions.TXT) {
       if (attrib != null) {
@@ -898,10 +901,12 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
     }
   }
 
+  @Override
   public boolean containsParent(GeneralObj oldObj) {
     return oldObj.equals(startState) || oldObj.equals(endState);
   }
 
+  @Override
   public Point getCenter(int page) {
     if (!ready)
       return new Point(0, 0);
@@ -1035,6 +1040,7 @@ public class StateTransitionObj extends TransitionObj implements Cloneable {
     }
   }
 
+  @Override
   public void setParentModified(boolean b) {
     super.setParentModified(b);
     if (b) {

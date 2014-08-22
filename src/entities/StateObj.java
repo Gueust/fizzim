@@ -116,6 +116,7 @@ public class StateObj extends GeneralObj implements Cloneable {
     return copy;
   }
 
+  @Override
   public void paintComponent(Graphics g) {
     if (myPage == currPage) {
       g.setColor(color);
@@ -201,6 +202,7 @@ public class StateObj extends GeneralObj implements Cloneable {
     selectStatus = SelectOptions.NONE;
   }
 
+  @Override
   public void adjustShapeOrPosition(int x, int y) {
     if (myPage == currPage) {
       // move object stuff
@@ -268,6 +270,7 @@ public class StateObj extends GeneralObj implements Cloneable {
     }
   }
 
+  @Override
   public SelectOptions getSelectStatus() {
     return selectStatus;
   }
@@ -281,6 +284,7 @@ public class StateObj extends GeneralObj implements Cloneable {
     return false;
   }
 
+  @Override
   public Point getCenter(int page) {
     Point a = new Point(x0 + ((x1 - x0) / 2), y0 + ((y1 - y0) / 4));
     return a;
@@ -294,6 +298,7 @@ public class StateObj extends GeneralObj implements Cloneable {
   // this provided a transition object a way to know if the state object has
   // been
   // moved or resized (because if will have to then change its endpoints)
+  @Override
   public boolean isModified() {
     if (modified)
       return true;
@@ -324,6 +329,7 @@ public class StateObj extends GeneralObj implements Cloneable {
 
   }
 
+  @Override
   public void updateObj() {
 
   }
@@ -432,6 +438,7 @@ public class StateObj extends GeneralObj implements Cloneable {
     }
   }
 
+  @Override
   public boolean setBoxSelectStatus(int x, int y) {
     xTemp = x;
     yTemp = y;
@@ -441,6 +448,7 @@ public class StateObj extends GeneralObj implements Cloneable {
       return false;
   }
 
+  @Override
   public boolean setBoxSelectStatus(int _x0, int _y0, int _x1, int _y1) {
     if (myPage == currPage && x0 > _x0 && y0 > _y0 && x1 < _x1 && y1 < _y1) {
       selectStatus = SelectOptions.CENTER;

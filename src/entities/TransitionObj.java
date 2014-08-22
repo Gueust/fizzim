@@ -25,7 +25,6 @@ import java.awt.Color;
 import java.awt.Point;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.Vector;
 
 import attributes.GlobalAttributes;
 import attributes.ObjAttribute;
@@ -71,6 +70,11 @@ public abstract class TransitionObj extends GeneralObj implements Cloneable {
   public void initTrans(StateObj start) {
   }
 
+  /**
+   * Initialize a transition during the opening of a file.
+   * Called when opening a file after having loaded the information from the
+   * file.
+   */
   public abstract void makeConnections(Collection<GeneralObj> objList);
 
   public double getAngle(Point outer, Point inner) {
